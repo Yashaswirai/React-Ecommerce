@@ -16,7 +16,8 @@ const Register = () => {
   const dispatch = useDispatch();
   const registerHandler = (data) => {
     data.id = nanoid();
-    data.isAdmin = false; 
+    data.isAdmin = false;
+    data.cart = [];
     dispatch(registerUser(data));     //dispatching the user data to the store
     reset();
     navigate("/login");

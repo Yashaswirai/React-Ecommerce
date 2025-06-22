@@ -18,7 +18,7 @@ const NavBar = () => {
           {/* Logo/Brand */}
           <div className="flex-shrink-0">
             <NavLink to="/" className="text-2xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent hover:from-blue-700 hover:to-purple-700 transition-all duration-200">
-              ShopHub
+              LUMINA
             </NavLink>
           </div>
 
@@ -56,7 +56,20 @@ const NavBar = () => {
                 </svg>
                 Products
               </NavLink>
-
+                {user && <NavLink className={({isActive}) =>
+                  `px-3 py-2 rounded-lg text-sm font-medium transition-all duration-200 ${
+                    isActive
+                      ? "bg-gradient-to-r from-blue-600 to-purple-600 text-white shadow-md"
+                      : "text-gray-700 hover:text-blue-600 hover:bg-blue-50"
+                  }`
+                }
+                to="/user/cart"
+              >
+                <svg className="w-4 h-4 inline-block mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
+                </svg>
+                Cart
+                </NavLink>}
               {user?.isAdmin && (
                 <NavLink
                   className={({isActive}) =>
@@ -90,6 +103,21 @@ const NavBar = () => {
                     </span>
                   )}
                 </div>
+                  <NavLink
+                    className={({isActive}) =>
+                      `px-3 py-2 rounded-lg text-sm font-medium transition-all duration-200 ${
+                        isActive
+                          ? "bg-gradient-to-r from-blue-600 to-purple-600 text-white shadow-md"
+                          : "text-gray-700 hover:text-blue-600 hover:bg-blue-50"
+                      }`
+                    }
+                    to="/user/profile"
+                  >
+                    <svg className="w-4 h-4 inline-block mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                    </svg>
+                    Profile
+                  </NavLink>
                 <button
                   onClick={logOutHandler}
                   className="bg-gradient-to-r from-red-500 to-pink-500 text-white px-4 py-2 rounded-lg text-sm font-medium hover:from-red-600 hover:to-pink-600 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 transform transition-all duration-200 hover:scale-[1.02] active:scale-[0.98] shadow-md hover:shadow-lg"

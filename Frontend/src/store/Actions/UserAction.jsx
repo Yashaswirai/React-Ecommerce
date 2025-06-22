@@ -49,3 +49,25 @@ export const registerUser = (user) => async (dispatch) => {
     toast.error(error.response.data);
   }
 };
+
+export const updateUser = (user) => async (dispatch) => {
+  try {
+    const res = await axios.patch(`/users/${user.id}`, user);
+    localStorage.setItem("user", JSON.stringify(res.data));
+    console.log(res.data);
+    dispatch(currentUser());
+  } catch (error) {
+    toast.error(error.response.data);
+  }
+};
+
+export const deleteUser = (id) => async (dispatch) => {
+  try {
+    const res = await axios.delete(`/users/${id}`);
+    localStorage.removeItem("user");
+    dispatch(removeUser());
+    toast.success("User Deleted Successfully");
+  } catch (error) {
+    toast.error(error.response.data);
+  }
+};

@@ -1,8 +1,10 @@
-import React from "react";
+import React from 'react';
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { deleteProduct, updateProduct } from "../store/Actions/ProductAction";
+import { updateUser } from "../store/Actions/UserAction";
+import { toast } from "react-toastify";
 
 const ProductDetail = () => {
   const { id } = useParams();
@@ -26,7 +28,21 @@ const ProductDetail = () => {
   const deleteHandler = () => {
     dispatch(deleteProduct(id));
     navigate("/products");
+  };
 
+  const addCartHandler = (id) => {
+    const idx = user.cart.findIndex((product) => product.productID === id);
+    
+    const updatedUser = {
+      ...user,
+      cart: idx === -1
+        ? [...user.cart, { productID: id, quantity: 1 }]
+        : user.cart.map((item, index) => 
+            index === idx ? { ...item, quantity: item.quantity + 1 } : item
+          )
+    };
+    dispatch(updateUser(updatedUser));
+    toast.success("Product Added to Cart");
   };
 
   return (
@@ -38,35 +54,35 @@ const ProductDetail = () => {
             <div className="lg:w-1/2">
               <img
                 className="w-full h-96 lg:h-full object-cover"
-                src={product.image}
-                alt={product.title}
+                src={product?.image}
+                alt={product?.title}
               />
             </div>
             <div className="lg:w-1/2 p-8 lg:p-12">
               <div className="mb-6">
-                {product.category && (
+                {product?.category && (
                   <span className="inline-block px-3 py-1 bg-blue-100 text-blue-800 text-sm font-medium rounded-full mb-4">
-                    {product.category}
+                    {product?.category}
                   </span>
                 )}
                 <h1 className="text-3xl lg:text-4xl font-bold text-gray-900 mb-4 leading-tight">
-                  {product.title}
+                  {product?.title}
                 </h1>
                 <p className="text-gray-600 text-lg leading-relaxed mb-6">
-                  {product.description}
+                  {product?.description}
                 </p>
                 <div className="text-4xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent mb-8">
-                  ${product.price}
+                  ${product?.price}
                 </div>
               </div>
 
               <div className="flex flex-col sm:flex-row gap-4">
-                <button className="flex-1 bg-gradient-to-r from-blue-600 to-purple-600 text-white py-4 px-6 rounded-lg font-medium hover:from-blue-700 hover:to-purple-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transform transition-all duration-200 hover:scale-[1.02] active:scale-[0.98] shadow-lg hover:shadow-xl">
+                {user && <button onClick={()=>addCartHandler(product.id)} className="flex-1 bg-gradient-to-r from-blue-600 to-purple-600 text-white py-4 px-6 rounded-lg font-medium hover:from-blue-700 hover:to-purple-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transform transition-all duration-200 hover:scale-[1.02] active:scale-[0.98] shadow-lg hover:shadow-xl">
                   <svg className="w-5 h-5 inline-block mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 3h2l.4 2M7 13h10l4-8H5.4m0 0L7 13m0 0l-1.5 6M7 13l-1.5-6m0 0h15M17 13v6a2 2 0 01-2 2H9a2 2 0 01-2-2v-6" />
                   </svg>
                   Add to Cart
-                </button>
+                </button>}
                 {user?.isAdmin && (
                   <button
                     type="button"
