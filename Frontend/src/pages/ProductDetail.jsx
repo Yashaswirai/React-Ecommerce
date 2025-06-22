@@ -1,9 +1,9 @@
-import React from 'react';
+
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { deleteProduct, updateProduct } from "../store/Actions/ProductAction";
-import { updateUser } from "../store/Actions/UserAction";
+import { updateUser, updateUserCart, removeItemFromCart } from "../store/Actions/UserAction";
 import { toast } from "react-toastify";
 
 const ProductDetail = () => {
@@ -27,6 +27,12 @@ const ProductDetail = () => {
 
   const deleteHandler = () => {
     dispatch(deleteProduct(id));
+    user.cart.forEach((item) => {
+      if (item.productID === id) {
+        toast.success("Product Removed from Cart");
+        dispatch(removeItemFromCart(user, id));
+      }
+    });
     navigate("/products");
   };
 
@@ -41,7 +47,7 @@ const ProductDetail = () => {
             index === idx ? { ...item, quantity: item.quantity + 1 } : item
           )
     };
-    dispatch(updateUser(updatedUser));
+    dispatch(updateUserCart(updatedUser));
     toast.success("Product Added to Cart");
   };
 
@@ -49,7 +55,7 @@ const ProductDetail = () => {
     <div className="min-h-screen bg-gradient-to-br from-gray-50 to-blue-50 py-8">
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Product Details Card */}
-        <div className="bg-white rounded-2xl shadow-xl overflow-hidden mb-8 border border-gray-100">
+        <div className="bg-white/80 backdrop-blur-sm rounded-2xl shadow-xl overflow-hidden mb-8 border border-white/20">
           <div className="lg:flex">
             <div className="lg:w-1/2">
               <img
@@ -101,7 +107,7 @@ const ProductDetail = () => {
         </div>
         {/* Admin Update Form */}
         {user?.isAdmin && (
-          <div className="bg-white rounded-2xl shadow-xl p-8 border border-gray-100">
+          <div className="bg-white/80 backdrop-blur-sm rounded-2xl shadow-xl p-8 border border-white/20">
             <h2 className="text-2xl font-bold text-gray-900 mb-6 flex items-center">
               <svg className="w-6 h-6 mr-2 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />

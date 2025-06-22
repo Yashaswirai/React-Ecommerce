@@ -8,12 +8,8 @@
       "isAdmin": true,
       "cart": [
         {
-          "productID": "SVbRMK7mXP2XTuh2lk6y8",
-          "quantity": 2
-        },
-        {
           "productID": "1",
-          "quantity": 2
+          "quantity": 7
         }
       ]
     },
@@ -23,16 +19,7 @@
       "email": "test@captain.com",
       "password": "123456",
       "isAdmin": false,
-      "cart": [
-        {
-          "productID": "1",
-          "quantity": 3
-        },
-        {
-          "productID": "SVbRMK7mXP2XTuh2lk6y8",
-          "quantity": 2
-        }
-      ]
+      "cart": []
     }
   ],
   "products": [
@@ -43,14 +30,6 @@
       "description": "Your perfect pack for everyday use and walks in the forest. Stash your laptop (up to 15 inches) in the padded sleeve.",
       "category": "men's clothing",
       "image": "https://fakestoreapi.com/img/81fPKd-2AYL._AC_SL1500_.jpg"
-    },
-    {
-      "id": "SVbRMK7mXP2XTuh2lk6y8",
-      "category": "men's clothing",
-      "image": "https://img-global.cpcdn.com/recipes/51e4d8d720317260/1360x1928cq90/tandoori-butter-chicken-masala-recipe-main-photo.webp",
-      "title": "chicken",
-      "price": "12.5",
-      "description": "nice chicken"
     }
   ]
 }

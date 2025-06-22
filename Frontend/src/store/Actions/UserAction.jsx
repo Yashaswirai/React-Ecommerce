@@ -54,7 +54,6 @@ export const updateUser = (user) => async (dispatch) => {
   try {
     const res = await axios.patch(`/users/${user.id}`, user);
     localStorage.setItem("user", JSON.stringify(res.data));
-    console.log(res.data);
     dispatch(currentUser());
   } catch (error) {
     toast.error(error.response.data);
@@ -67,6 +66,30 @@ export const deleteUser = (id) => async (dispatch) => {
     localStorage.removeItem("user");
     dispatch(removeUser());
     toast.success("User Deleted Successfully");
+  } catch (error) {
+    toast.error(error.response.data);
+  }
+};
+
+export const updateUserCart = (user) => async (dispatch) => {
+  try {
+    const res = await axios.patch(`/users/${user.id}`, user);
+    localStorage.setItem("user", JSON.stringify(res.data));
+    dispatch(currentUser());
+  } catch (error) {
+    toast.error(error.response.data);
+  }
+};
+
+export const removeItemFromCart = (user, productID) => async (dispatch) => {
+  try {
+    const updatedUser = {
+      ...user,
+      cart: user.cart.filter((item) => item.productID !== productID),
+    };
+    const res = await axios.patch(`/users/${user.id}`, updatedUser);
+    localStorage.setItem("user", JSON.stringify(res.data));
+    dispatch(currentUser());
   } catch (error) {
     toast.error(error.response.data);
   }
