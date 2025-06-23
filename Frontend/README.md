@@ -11,6 +11,8 @@ A contemporary React-based e-commerce application built with Redux Toolkit, feat
 - **Product Management**: Admin interface for CRUD operations
 - **User Profiles**: Personal profile management and settings
 - **Responsive Design**: Optimized for desktop, tablet, and mobile devices
+- **Lazy Loading**: Components are loaded on demand for faster performance
+- **Pagination with Infinite Scroll**: Seamless product browsing with automatic loading as you scroll
 
 ### 🎨 **Modern UI/UX Design**
 - **Glass-morphism Effects**: Contemporary backdrop blur and transparency
