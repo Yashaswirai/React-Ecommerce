@@ -85,7 +85,7 @@ export const removeItemFromCart = (user, productID) => async (dispatch) => {
   try {
     const updatedUser = {
       ...user,
-      cart: user.cart.filter((item) => item.productID !== productID),
+      cart: user.cart.filter((item) => item.productID != productID),
     };
     const res = await axios.patch(`/users/${user.id}`, updatedUser);
     localStorage.setItem("user", JSON.stringify(res.data));

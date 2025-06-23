@@ -8,11 +8,12 @@ import { toast } from "react-toastify";
 
 const ProductDetail = () => {
   const { id } = useParams();
-  const products = useSelector((state) => state.products.product);
+  const products = useSelector((state) => state.products.product);  
   const user = useSelector((state) => state.user.user);
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const product = products.find((product) => product.id === id);
+  const product = products?.find((product) => product.id == id);
+  console.log("Product Detail:", product);
   const {
     register,
     handleSubmit,
@@ -28,7 +29,7 @@ const ProductDetail = () => {
   const deleteHandler = () => {
     dispatch(deleteProduct(id));
     user.cart.forEach((item) => {
-      if (item.productID === id) {
+      if (item.productID == id) {
         toast.success("Product Removed from Cart");
         dispatch(removeItemFromCart(user, id));
       }
@@ -37,14 +38,14 @@ const ProductDetail = () => {
   };
 
   const addCartHandler = (id) => {
-    const idx = user.cart.findIndex((product) => product.productID === id);
+    const idx = user.cart.findIndex((product) => product.productID == id);
     
     const updatedUser = {
       ...user,
-      cart: idx === -1
+      cart: idx == -1
         ? [...user.cart, { productID: id, quantity: 1 }]
         : user.cart.map((item, index) => 
-            index === idx ? { ...item, quantity: item.quantity + 1 } : item
+            index == idx ? { ...item, quantity: item.quantity + 1 } : item
           )
     };
     dispatch(updateUserCart(updatedUser));
